@@ -97,21 +97,32 @@ const App = () => {
         </header>
 
         {trendingMovies.length > 0 && (
-          <section className="trending">
-            <h2>Trending Movies</h2>
-            <ul>
-              {trendingMovies.map((movie, index) => (
-                <li key={movie.$id} className="flex items-center gap-2 mb-4">
-                  <p className="font-bold">{index + 1}.</p>
-                  <img
-                    src={movie.poster_url}
-                    alt={movie.searchTerm}
-                    className="w-16 h-24 object-cover rounded"
-                  />
-                  <span className="ml-2 text-white">{movie.searchTerm}</span>
-                </li>
-              ))}
-            </ul>
+          <section className="trending px-4 py-8">
+            <h2 className="text-4xl font-extrabold text-white drop-shadow-md mb-6">
+              Trending Movies
+            </h2>
+
+            {/* Horizontal Scroll Container */}
+            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+              <ul className="flex space-x-6 min-w-max pr-4">
+                {trendingMovies.map((movie, index) => (
+                  <li
+                    key={movie.$id}
+                    className="inline-block flex-shrink-0 w-40 text-center"
+                  >
+                    <p className="text-lg font-bold text-yellow-300">{index + 1}.</p>
+                    <img
+                      src={movie.poster_url}
+                      alt={movie.searchTerm}
+                      className="w-36 h-52 object-cover rounded-lg shadow-lg mx-auto"
+                    />
+                    <span className="text-sm text-white block mt-2">
+                      {movie.searchTerm}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </section>
         )}
 
