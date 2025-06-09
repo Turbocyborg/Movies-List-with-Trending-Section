@@ -68,3 +68,62 @@ export const getTrendingMovies = async () => {
         return [];
     }
 };
+
+// 1) Add to Watchlist
+export async function addToWatchlist(userId, movie) {
+  return databases.createDocument(
+    DATABASE_ID,
+    'watchlists',
+    ID.unique(),
+    {
+      userId,
+      movieId: movie.id,
+      title: movie.title,
+      poster_url: movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+        : '',
+      createdAt: new Date().toISOString()
+    }
+  );
+}
+
+// 2) Remove from Watchlist
+export async function removeFromWatchlist(docId) {
+  return databases.deleteDocument(DATABASE_ID, 'watchlists', docId);
+}
+
+// 3) Fetch Watchlist for current user
+export async function getWatchlist(userId) {
+  const res = await databases.listDocuments(DATABASE_ID, 'watchlists', [
+    Query.equal('userId', userId),
+    Query.orderDesc('createdAt')
+  ]);
+  return res.documents;
+}
+
+// 4) Add to Watched
+export async function addToWatched(userId, movie) {
+  return databases.createDocument(
+    DATABASE_ID,
+    'watched',
+    ID.unique(),
+    {
+      userId,
+      movieId: movie.id,
+      title: movie.title,
+      poster_url: movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+        : '',
+      watchedAt: new Date().toISOString()
+    }
+  );
+}
+
+// 5) Fetch Watched list
+export async function getWatched(userId) {
+  const res = await databases.listDocuments(DATABASE_ID, 'watched', [
+    Query.equal('userId', userId),
+    Query.orderDesc('watchedAt')
+  ]);
+  return res.documents;
+}
