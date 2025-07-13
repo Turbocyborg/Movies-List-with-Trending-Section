@@ -7,11 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "setup-watchlist": "node -r dotenv/config src/createWatchlistCollection.js",
+    "setup-search-trends": "node -r dotenv/config src/createSearchTrendsCollection.js",
+    "check-config": "node -r dotenv/config src/checkAppwriteConfig.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
     "appwrite": "^18.1.1",
+    "dotenv": "^16.6.1",
     "learn-react": "file:",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
