@@ -1,142 +1,85 @@
-# MovieApp: React + TMDB + Appwrite
+# Movies List App with Authentication
 
-A modern movie discovery and recommendation app built with **React**, **Tailwind CSS**, and **Appwrite** (BaaS). It fetches movie data from **TMDB (The Movie Database)** API, tracks search counts, and displays trending searches in a smooth horizontal carousel. User authentication (signup/login) and session management are handled by Appwrite.
+A React.js application that displays movies from the TMDB API, tracks trending searches using Appwrite, and includes user authentication.
 
-## 🚀 Features
+## Features
 
-* **Movie Search**: Search TMDB for movies by title with debounced input.
-* **Discover Popular**: View a list of popular movies by default.
-* **Trending Carousel**: Shows top searched terms as a horizontal scrollable carousel.
-* **Search Count Tracking**: Each search term increments a count in Appwrite database.
-* **User Auth**: Email/password signup, login, and logout via Appwrite Account service.
-* **Protected UI**: Only authenticated users can search and view trending lists.
-* **Responsive Design**: Mobile-first layout using Tailwind CSS.
+- 🎬 Browse popular movies
+- 🔍 Search for movies by title
+- 📊 View trending searches
+- 👤 User authentication (signup, login, logout)
+- 📋 Add movies to your watchlist (when logged in)
+- 🔒 Secure authentication with Appwrite
+- 🔄 Auto-updating trending movies based on search activity
+- 💡 Search suggestions from previous searches
 
-## 📚 Tech Stack
+## Tech Stack
 
-* **Frontend**: React, Vite, Tailwind CSS
-* **Backend-as-a-Service**: Appwrite (Authentication, Database)
-* **Movie API**: TMDB API (v3)
-* **State Management**: React `useState`, `useEffect`, and context
-* **Utilities**: `react-use` for `useDebounce`
+- React.js
+- Vite
+- Appwrite (Backend as a Service)
+- TMDB API (The Movie Database)
+- TailwindCSS for styling
 
-## 🛠️ Prerequisites
+## Setup Instructions
 
-* Node.js (>=14)
-* npm or yarn
-* Appwrite account (cloud or self‑hosted)
-* TMDB API key
+1. Clone the repository
+2. Install dependencies:
 
-## 🔧 Setup & Installation
-
-1. **Clone the repo**
-
-   ```bash
-   git clone https://github.com/<your-username>/movieapp.git
-   cd movieapp
    ```
-
-2. **Install dependencies**
-
-   ```bash
    npm install
-   # or
-   yarn install
    ```
 
-3. **Environment Variables**
-   Create a `.env` file in project root:
+3. Create a `.env` file in the root directory with the following environment variables:
 
-   ```ini
-   VITE_APPWRITE_PROJECT_ID=your_appwrite_project_id
-   VITE_APPWRITE_DATABASE_ID=your_appwrite_database_id
-   VITE_APPWRITE_COLLECTION_ID=your_appwrite_collection_id
-   VITE_TMDB_API_KEY=your_tmdb_api_key
+   ```
+   # Appwrite Configuration
+   VITE_APPWRITE_PROJECT_ID=your-project-id
+   VITE_APPWRITE_DATABASE_ID=your-database-id
+   VITE_APPWRITE_COLLECTION_ID=your-collection-id  # Optional
+
+   # TMDB API
+   VITE_TMDB_API_KEY=your-tmdb-api-key
    ```
 
-4. **Configure Appwrite**
+4. Appwrite Setup:
 
-   * In Appwrite Console, under **Settings ▶ Platform**, add `http://localhost:5173` to Domains and CORS.
-   * Create a Database and Collection for trending searches.
-   * Enable **Email/Password** auth in Appwrite.
+   - Create an Appwrite project
+   - Create a database
+   - Run the setup scripts to create required collections:
+     ```
+     npm run setup-watchlist
+     npm run setup-search-trends
+     ```
+   - Or use the Debug panel in the app to create collections
+   - Enable authentication in your Appwrite project settings
 
-5. **Initialize Tailwind** (if not already)
-
-   ```bash
-   npx tailwindcss init -p
+5. Run the development server:
    ```
-
-   Verify `tailwind.config.js` includes:
-
-   ```js
-   module.exports = {
-     content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
-     theme: { extend: {} },
-     plugins: [require('tailwind-scrollbar')],
-   };
-   ```
-
-6. **Run the App**
-
-   ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-Open `http://localhost:5173` in your browser. You should see the login screen. After signing up or logging in, you can search for movies and view the trending carousel.
+## Usage
 
-## 🗂️ Project Structure
+- Browse movies on the homepage
+- Search for movies using the search bar
+- Click "Login / Sign Up" to create an account or log in
+- Add movies to your watchlist by clicking the "+" button on a movie card when logged in
+- View trending searches in the "Trending Movies" section
+- Use the Debug panel to troubleshoot Appwrite connection issues
 
-```
-movieapp/
-├── public/
-│   └── hero.jpg             # Hero banner image
-├── src/
-│   ├── components/
-│   │   ├── Search.jsx       # Movie search input
-│   │   ├── Spinner.jsx      # Loading spinner
-│   │   ├── MovieCard.jsx    # Movie result card
-│   │   ├── LoginForm.jsx    # Login form
-│   │   └── SignupForm.jsx   # Signup form
-│   ├── contexts/
-│   │   └── AuthContext.jsx  # Auth provider & hook
-│   ├── appwrite.js          # Appwrite client & API methods
-│   ├── App.jsx              # Main app component
-│   ├── index.css            # Tailwind imports + custom styles
-│   └── main.jsx             # ReactDOM root + AuthProvider
-├── tailwind.config.js
-├── postcss.config.js
-├── package.json
-└── README.md
-```
+## Troubleshooting
 
-## 🔒 Authentication Flow
+If you encounter issues with collections or authentication:
 
-1. **Sign Up**: Creates Appwrite user & email session (`account.create`, `createEmailSession`).
-2. **Login**: Creates email session and fetches current user.
-3. **Protected Routes**: `AuthContext` provides `user`; UI conditionally renders based on auth state.
-4. **Logout**: Deletes current session (`account.deleteSession('current')`).
+1. Check the Debug panel in the app (click the "Debug" tab)
+2. Verify your Appwrite credentials are correct
+3. Make sure the required collections exist
+4. See the detailed setup guides:
+   - [Watchlist Setup Guide](./WATCHLIST_SETUP.md)
+   - [Search Trends Setup Guide](./SEARCH_TRENDS_SETUP.md)
+   - [Watchlist Connection Fix](./WATCHLIST_CONNECTION_FIX.md)
 
-## 🎨 Styling & UX
+## Contributing
 
-* **Tailwind CSS** for utility-first styling.
-* **scroll-smooth** + **overflow-x-auto** for horizontal carousel.
-* **Tailwind‑scrollbar** plugin for clean thin scrollbar.
-* **Debounce** user input to minimize API calls.
-
-## 📈 Extending the App
-
-* **Auto-scroll** or **scroll snap** for carousel.
-* **User watchlists** & **favorites** in Appwrite.
-* **Comments & reviews** per movie.
-* **Social features**: follow users, share lists.
-* **Serverless functions** for recommendations.
-
-## 👤 Author
-
-* **Your Name** – [YourGitHub](https://github.com/<turbocyborg>)
-
-## 📄 License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
