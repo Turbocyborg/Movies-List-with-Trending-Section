@@ -59,31 +59,6 @@ A React.js application that displays movies from the TMDB API, tracks trending s
    npm run dev
    ```
 
-## 🗂️ Project Structure
-
-```
-movieapp/
-├── public/
-│   └── hero.jpg             # Hero banner image
-├── src/
-│   ├── components/
-│   │   ├── Search.jsx       # Movie search input
-│   │   ├── Spinner.jsx      # Loading spinner
-│   │   ├── MovieCard.jsx    # Movie result card
-│   │   ├── LoginForm.jsx    # Login form
-│   │   └── SignupForm.jsx   # Signup form
-│   ├── contexts/
-│   │   └── AuthContext.jsx  # Auth provider & hook
-│   ├── appwrite.js          # Appwrite client & API methods
-│   ├── App.jsx              # Main app component
-│   ├── index.css            # Tailwind imports + custom styles
-│   └── main.jsx             # ReactDOM root + AuthProvider
-├── tailwind.config.js
-├── postcss.config.js
-├── package.json
-└── README.md
-```
-
 ## Usage
 
 - Browse movies on the homepage
